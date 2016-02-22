@@ -1,0 +1,4 @@
+#!/bin/bash
+if test -d /var/lib/git/$REPO.git/hooks/post-receive.d; then
+  /bin/run-parts --regex '\.sh$' /var/lib/git/$REPO.git/hooks/post-receive.d
+fi
