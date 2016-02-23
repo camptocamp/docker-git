@@ -16,8 +16,8 @@ RUN useradd -r -s /usr/bin/git-shell -d /var/lib/git git \
   && chown -R git.git /var/lib/git
 
 # Configure git hook
-COPY post-receive /post-receive
-ONBUILD COPY post-receive.d /post-receive.d/
+COPY post-receive /
+ONBUILD COPY post-receive.d /post-receive.d
 
 # Define VOLUMES
 VOLUME ["/var/lib/git", "/etc/ssh/ssh_host_keys"]
@@ -26,7 +26,7 @@ VOLUME ["/var/lib/git", "/etc/ssh/ssh_host_keys"]
 RUN gem install rack github_api --no-ri --no-rdoc
 
 # Configure entrypoint and command
-COPY /docker-entrypoint.sh /
-ONBUILD COPY /docker-entrypoint.d/* /docker-entrypoint.d/
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["/usr/sbin/sshd", "-D"]
+COPY docker-entrypoint.sh /
+COPY docker-entrypoint.d /docker-entrypoint.d
+ONBUILD COPY docker-entrypoint.d /docker-entrypoint.d
+ENTRYPOINT ["/docker-entrypoint.sh", "/usr/sbin/sshd", "-D"]
