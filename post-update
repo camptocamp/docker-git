@@ -1,0 +1,4 @@
+#!/bin/bash
+if test -d /var/lib/git/%{REPO}.git/hooks/post-update; then
+  /bin/run-parts --regex '\.sh$' /var/lib/git/%{REPO}.git/hooks/post-update.d
+fi

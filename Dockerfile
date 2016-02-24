@@ -18,6 +18,8 @@ RUN useradd -r -s /usr/bin/git-shell -d /var/lib/git git \
 # Configure git hook
 COPY post-receive /
 ONBUILD COPY post-receive.d /post-receive.d
+COPY post-update /
+ONBUILD COPY post-update.d /post-update.d
 
 # Define VOLUMES
 VOLUME ["/var/lib/git", "/etc/ssh/ssh_host_keys"]
