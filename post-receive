@@ -1,4 +1,10 @@
 #!/bin/bash
+
+read -d'' -u0 stdin
+
 if test -d /var/lib/git/%{REPO}.git/hooks/post-receive.d; then
-  /bin/run-parts --regex '\.sh$' /var/lib/git/%{REPO}.git/hooks/post-receive.d
+  /bin/run-parts --regex '\.sh$' --list /var/lib/git/%{REPO}.git/hooks/post-receive.d | while read s; do
+    echo $s >/dev/stderr
+    echo "$stdin" | $s
+  done
 fi
