@@ -6,3 +6,7 @@ if test -n "${RSA_PRIVATE_KEY}"; then
   ssh-keygen -y -f /tmp/id_rsa >> /var/lib/git/.ssh/authorized_keys
   rm -f /tmp/id_rsa
 fi
+
+if test -n "${PUBLIC_KEY}"; then
+  echo "${PUBLIC_KEY}" >> /var/lib/git/.ssh/authorized_keys
+fi
