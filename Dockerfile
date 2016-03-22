@@ -24,8 +24,12 @@ ONBUILD COPY post-update.d /post-update.d
 # Define VOLUMES
 VOLUME ["/var/lib/git", "/etc/ssh/ssh_host_keys"]
 
-# Install hooks dependencies
-RUN gem install rack github_api --no-ri --no-rdoc
+# github_pki
+ENV GOPATH=/go
+RUN apt-get update && apt-get install -y golang-go \
+  && go get github.com/camptocamp/github_pki \
+  && apt-get autoremove -y golang-go \
+  && rm -rf /var/lib/apt/lists/*
 
 # Configure entrypoint and command
 COPY docker-entrypoint.sh /
